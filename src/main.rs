@@ -1,6 +1,6 @@
-use std::io::{self, Write};
+use std::io;
 
-use models::{Task, TaskPriority};
+use models::Task;
 
 mod command_processing;
 mod error;
