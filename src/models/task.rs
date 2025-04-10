@@ -1,41 +1,86 @@
 use random_str as random;
 
-enum TaskStatus {
-    Pending, Completed
-}
-
-enum TaskPriority {
-    Low, Medium, High
-}
-
 pub struct Task {
-    id: String, 
+    id: i32,
     title: String,
-    description: Option<String>,
+    description: String,
     priority: TaskPriority,
     status: TaskStatus,
     category: String,
 }
 
+pub enum TaskStatus {
+    Pending,
+    Completed,
+}
+
+impl TaskStatus {
+    pub fn to_string(&self) -> String {
+        match self {
+            TaskStatus::Pending => "Pending".to_string(),
+            TaskStatus::Completed => "Completed".to_string(),
+        }
+    }
+}
+
+pub enum TaskPriority {
+    Low,
+    Medium,
+    High,
+}
+
+impl TaskPriority {
+    pub fn new(priority: &str) -> Option<Self> {
+        match priority {
+            "low" => Some(TaskPriority::Low),
+            "medium" => Some(TaskPriority::Medium),
+            "high" => Some(TaskPriority::High),
+            _ => None,
+        }
+    }
+
+    pub fn to_string(&self) -> String {
+        match self {
+            TaskPriority::Low => "Low".to_string(),
+            TaskPriority::Medium => "Medium".to_string(),
+            TaskPriority::High => "High".to_string(),
+        }
+    }
+}
+
 impl Task {
-    fn new(
-        title: String, 
-        description: Option<String>, 
-        priority: TaskPriority, 
-        category: String
-    ) -> Task {
-        Task { 
-            id: random::get_string(5, true, false, true, true), 
+    pub fn new(
+        title: String,
+        description: String,
+        priority: TaskPriority,
+        category: String,
+    ) -> Self {
+        Self {
+            id: random::get_int(1, 100),
             title,
-            description: {
-                match description {
-                    Some(value) => Some(value),
-                    _ => Some("".to_string())
-                }
-            }, 
-            priority, 
-            status: TaskStatus::Pending, 
+            description,
+            priority,
+            status: TaskStatus::Pending,
             category,
         }
+    }
+
+    pub fn task_info(&self) -> String {
+        format!(
+            "{:3} | {:<30} | {:<8} | {:<10} | {:<8}",
+            self.id,
+            self.title,
+            self.priority.to_string(),
+            self.category,
+            self.status.to_string()
+        )
+    }
+
+    pub fn mark_task_as_pending(&mut self) {
+        self.status = TaskStatus::Pending;
+    }
+
+    pub fn mark_task_as_complete(&mut self) {
+        self.status = TaskStatus::Completed;
     }
 }
