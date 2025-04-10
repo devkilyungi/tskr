@@ -110,14 +110,84 @@ fn main() {
                 if task_list.is_empty() {
                     println!("No tasks added yet.");
                 } else {
-                    println!("{:3} | {:<30} | {:<8} | {:<10} | {:<8}", "ID", "Title", "Priority", "Category", "Status");
+                    println!(
+                        "{:3} | {:<30} | {:<8} | {:<10} | {:<8}",
+                        "ID", "Title", "Priority", "Category", "Status"
+                    );
                     println!("{}", "-".repeat(70)); // Add a separator line
                     task_list
                         .iter()
                         .for_each(|task| println!("{}", task.task_info()))
                 }
             }
-            "filter" => {}
+            "filter" => {
+                println!("Filter tasks by category or status:");
+                let mut choice = String::new();
+                io::stdin()
+                    .read_line(&mut choice)
+                    .expect("Failed to read line");
+                let choice = choice.trim().to_string();
+
+                if choice == "category" {
+                    println!("Filter tasks by category:");
+                    let mut category = String::new();
+                    print!("Category: ");
+                    io::stdout().flush().expect("Failed to flush stdout");
+                    io::stdin()
+                        .read_line(&mut category)
+                        .expect("Failed to read line");
+                    category = category.trim().to_string();
+
+                    let filtered_tasks = task_list
+                        .iter()
+                        .filter(|task| task.category.to_lowercase() == category.to_lowercase())
+                        .collect::<Vec<&Task>>();
+
+                    if filtered_tasks.is_empty() {
+                        println!("No tasks found in category '{}'", category);
+                    } else {
+                        println!(
+                            "{:3} | {:<30} | {:<8} | {:<10} | {:<8}",
+                            "ID", "Title", "Priority", "Category", "Status"
+                        );
+                        println!("{}", "-".repeat(70)); // Add a separator line
+                        filtered_tasks
+                            .iter()
+                            .for_each(|task| println!("{}", task.task_info()));
+                    }
+                } else if choice == "status" {
+                    println!("Filter tasks by status:");
+                    let mut status = String::new();
+                    print!("Status: ");
+                    io::stdout().flush().expect("Failed to flush stdout");
+                    io::stdin()
+                        .read_line(&mut status)
+                        .expect("Failed to read line");
+                    status = status.trim().to_string();
+
+                    let filtered_tasks = task_list
+                        .iter()
+                        .filter(|task| {
+                            task.status.to_string().to_lowercase() == status.to_lowercase()
+                        })
+                        .collect::<Vec<&Task>>();
+
+                    if filtered_tasks.is_empty() {
+                        println!("No tasks found with the specified status.");
+                    } else {
+                        println!(
+                            "{:3} | {:<30} | {:<8} | {:<10} | {:<8}",
+                            "ID", "Title", "Priority", "Category", "Status"
+                        );
+                        println!("{}", "-".repeat(70)); // Add a separator line
+                        filtered_tasks
+                            .iter()
+                            .for_each(|task| println!("{}", task.task_info()));
+                    }
+                } else {
+                    println!("Invalid choice. Use 'category' or 'status'.");
+                }
+            }
             "update" => {}
             "complete" => {}
             "delete" => {}

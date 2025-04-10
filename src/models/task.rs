@@ -5,8 +5,8 @@ pub struct Task {
     title: String,
     description: String,
     priority: TaskPriority,
-    status: TaskStatus,
-    category: String,
+    pub status: TaskStatus,
+    pub category: String,
 }
 
 pub enum TaskStatus {
