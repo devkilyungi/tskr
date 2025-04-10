@@ -1,0 +1,58 @@
+# === Rust-specific ===
+/target/
+**/*.rs.bk
+
+# === Cargo-related ===
+/Cargo.lock  # Uncomment if you're making a library
+/.cargo/
+
+# === Backup & temporary files ===
+**/*~
+**/#*#
+**/.#*
+**/*.swp
+**/*.swo
+**/.DS_Store
+**/Thumbs.db
+
+# === IDEs & Editors ===
+# VS Code
+.vscode/
+/*.code-workspace
+
+# IntelliJ/RustRover/CLion
+.idea/
+*.iml
+
+# Eclipse
+.project
+.cproject
+.settings/
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Other
+*.log
+*.tmp
+
+# === Tests and output ===
+/coverage/
+/debug/
+/dist/
+/build/
+/out/
+
+# === OS-specific ===
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
