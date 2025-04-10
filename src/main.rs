@@ -1,7 +1,6 @@
 use std::io::{self, Write};
 
 use models::{Task, TaskPriority};
-use ui::available_commands;
 
 mod error;
 mod models;
@@ -124,7 +123,7 @@ fn main() {
             "delete" => {}
             "stats" => {}
             "help" => {
-                available_commands();
+                ui::available_commands();
             }
             _ => println!("Unknown command. Type 'help' for available commands."),
         }

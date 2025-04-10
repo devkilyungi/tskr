@@ -1,10 +1,8 @@
-use crate::models::Task;
-
 pub fn welcome_message() {
     // Display initial instructions to the user
     println!("tskr: Get things done! v.1.0");
     available_commands();
-    println!("\nLet's get started\n")
+    println!("\nLet's get started")
 }
 
 pub fn available_commands() {

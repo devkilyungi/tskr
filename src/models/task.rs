@@ -69,7 +69,7 @@ impl Task {
         format!(
             "{:3} | {:<30} | {:<8} | {:<10} | {:<8}",
             self.id,
-            self.title,
+            self.title.replace('\n', " "),
             self.priority.to_string(),
             self.category,
             self.status.to_string()
