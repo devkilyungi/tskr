@@ -1,4 +1,5 @@
 use random_str as random;
+use std::fmt;
 
 pub struct Task {
     pub id: i32,
@@ -14,11 +15,11 @@ pub enum TaskStatus {
     Completed,
 }
 
-impl TaskStatus {
-    pub fn to_string(&self) -> String {
+impl fmt::Display for TaskStatus {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            TaskStatus::Pending => "Pending".to_string(),
-            TaskStatus::Completed => "Completed".to_string(),
+            TaskStatus::Pending => write!(f, "Pending"),
+            TaskStatus::Completed => write!(f, "Completed"),
         }
     }
 }
@@ -29,6 +30,16 @@ pub enum TaskPriority {
     High,
 }
 
+impl fmt::Display for TaskPriority {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            TaskPriority::Low => write!(f, "Low"),
+            TaskPriority::Medium => write!(f, "Medium"),
+            TaskPriority::High => write!(f, "High"),
+        }
+    }
+}
+
 impl TaskPriority {
     pub fn new(priority: &str) -> Option<Self> {
         match priority {
@@ -36,14 +47,6 @@ impl TaskPriority {
             "medium" => Some(TaskPriority::Medium),
             "high" => Some(TaskPriority::High),
             _ => None,
-        }
-    }
-
-    pub fn to_string(&self) -> String {
-        match self {
-            TaskPriority::Low => "Low".to_string(),
-            TaskPriority::Medium => "Medium".to_string(),
-            TaskPriority::High => "High".to_string(),
         }
     }
 }
@@ -70,9 +73,9 @@ impl Task {
             "{:3} | {:<30} | {:<8} | {:<10} | {:<8}",
             self.id,
             self.title.replace('\n', " "),
-            self.priority.to_string(),
+            format!("{}", self.priority),
             self.category,
-            self.status.to_string()
+            self.status
         )
     }
 

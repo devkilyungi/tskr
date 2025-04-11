@@ -158,7 +158,7 @@ pub fn update_task(task_list: &mut [Task]) {
     let mut id = String::new();
     io::stdin().read_line(&mut id).expect("Failed to read line");
     let id = id.trim().parse::<i32>().expect("Invalid ID");
-    
+
     if let Some(task_index) = task_list.iter().position(|task| task.id == id) {
         println!("Enter new task details:");
         // Get title with validation loop
@@ -220,7 +220,7 @@ pub fn update_task(task_list: &mut [Task]) {
             .read_line(&mut category)
             .expect("Failed to read line");
         category = category.trim().to_string();
-        
+
         task_list[task_index].update_task(title, description, priority, category);
         println!("Task updated successfully!");
     } else {
