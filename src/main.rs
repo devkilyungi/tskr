@@ -47,7 +47,7 @@ fn main() {
             "add" => command_processing::add_tasks(&mut task_list, words),
             "list" => command_processing::list_tasks(&task_list),
             "filter" => command_processing::filter_tasks(&task_list),
-            "update" => {}
+            "update" => command_processing::update_task(&mut task_list),
             "complete" => {}
             "delete" => {}
             "stats" => {}

@@ -1,4 +1,4 @@
-use crate::{Task, TaskPriority};
+use crate::models::{Task, TaskPriority};
 use std::io::{self, Write};
 
 pub fn add_tasks(task_list: &mut Vec<Task>, words: Vec<&str>) {
@@ -150,5 +150,80 @@ pub fn filter_tasks(task_list: &[Task]) {
         }
     } else {
         println!("Invalid choice. Use 'category' or 'status'.");
+    }
+}
+
+pub fn update_task(task_list: &mut [Task]) {
+    println!("Update task by ID:");
+    let mut id = String::new();
+    io::stdin().read_line(&mut id).expect("Failed to read line");
+    let id = id.trim().parse::<i32>().expect("Invalid ID");
+    
+    if let Some(task_index) = task_list.iter().position(|task| task.id == id) {
+        println!("Enter new task details:");
+        // Get title with validation loop
+        let mut title = String::new();
+        loop {
+            print!("Title: ");
+            io::stdout().flush().expect("Failed to flush stdout");
+            io::stdin()
+                .read_line(&mut title)
+                .expect("Failed to read line");
+            let title = title.trim().to_string();
+            if !title.is_empty() {
+                break;
+            }
+            println!("Title cannot be empty. Please try again.");
+        }
+
+        // Get description with validation loop
+        let mut description = String::new();
+        print!("Description: ");
+        io::stdout().flush().expect("Failed to flush stdout");
+        io::stdin()
+            .read_line(&mut description)
+            .expect("Failed to read line");
+        description = description.trim().to_string();
+
+        // Get priority with validation loop
+        let mut priority = TaskPriority::Low;
+        loop {
+            print!("Priority (low/medium/high): ");
+            io::stdout().flush().expect("Failed to flush stdout");
+            let mut priority_input = String::new();
+            io::stdin()
+                .read_line(&mut priority_input)
+                .expect("Failed to read line");
+            let priority_input = priority_input.trim().to_lowercase();
+
+            match TaskPriority::new(&priority_input) {
+                Some(p) => {
+                    priority = p;
+                    break;
+                }
+                None => {
+                    if priority_input.is_empty() {
+                        println!("Using default priority: low");
+                        break;
+                    } else {
+                        println!("Invalid priority. Please enter 'low', 'medium', or 'high'.");
+                    }
+                }
+            }
+        }
+
+        // Get category with validation loop
+        let mut category = String::new();
+        print!("Category: ");
+        io::stdout().flush().expect("Failed to flush stdout");
+        io::stdin()
+            .read_line(&mut category)
+            .expect("Failed to read line");
+        category = category.trim().to_string();
+        
+        task_list[task_index].update_task(title, description, priority, category);
+        println!("Task updated successfully!");
+    } else {
+        println!("Task not found!");
     }
 }

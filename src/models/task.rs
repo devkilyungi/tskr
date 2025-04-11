@@ -1,7 +1,7 @@
 use random_str as random;
 
 pub struct Task {
-    id: i32,
+    pub id: i32,
     title: String,
     description: String,
     priority: TaskPriority,
@@ -74,6 +74,19 @@ impl Task {
             self.category,
             self.status.to_string()
         )
+    }
+
+    pub fn update_task(
+        &mut self,
+        title: String,
+        description: String,
+        priority: TaskPriority,
+        category: String,
+    ) {
+        self.title = title;
+        self.description = description;
+        self.priority = priority;
+        self.category = category;
     }
 
     pub fn mark_task_as_pending(&mut self) {
