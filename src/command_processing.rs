@@ -67,7 +67,11 @@ pub fn add_tasks(task_list: &mut Vec<Task>, words: Vec<&str>) {
         .expect("Failed to read line");
     category = category.trim().to_string();
 
-    task_list.push(Task::new(title, description, priority, category));
+    task_list.push(Task::new(title, description, priority, category, task_list));
+    let result = crate::storage::save_to_json(task_list);
+    if let Err(e) = result {
+        eprintln!("Failed to save tasks: {}", e);
+    }
     println!("Task added successfully!");
 }
 
@@ -315,7 +319,7 @@ pub fn show_stats(task_list: &[Task]) {
         (pending_tasks as f32 / task_list.len() as f32) * 100.0
     };
 
-    println!("Total tasks: {}", task_list.len());
+    println!("\nTotal tasks: {}", task_list.len());
     println!(
         "Completed Tasks: {} ({}%)",
         completed_tasks, completed_tasks_percent
@@ -324,20 +328,20 @@ pub fn show_stats(task_list: &[Task]) {
         "Pending Tasks: {} ({}%)",
         pending_tasks, pending_tasks_percent
     );
-    println!("Task by category: ");
+    println!("\nTask by category: ");
     if task_list.is_empty() {
         println!("No tasks found!");
     } else {
         task_list.iter().for_each(|task| {
-            println!("{}: {}", task.category, task.title);
+            print!("{}: {}", task.category, task.title);
         });
     }
-    println!("Task by priority: ");
+    println!("\nTask by priority: ");
     if task_list.is_empty() {
         println!("No tasks found!");
     } else {
         task_list.iter().for_each(|task| {
-            println!("{}: {}", task.priority, task.title);
+            print!("{}: {}", task.priority, task.title);
         });
     }
 }

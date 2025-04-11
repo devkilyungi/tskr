@@ -1,4 +1,3 @@
-use random_str as random;
 use std::fmt;
 use serde::{Serialize, Deserialize};
 
@@ -61,9 +60,13 @@ impl Task {
         description: String,
         priority: TaskPriority,
         category: String,
+        task_list: &[Task],
     ) -> Self {
+        // Find the highest existing ID and add 1
+        let max_id = task_list.iter().map(|t| t.id).max().unwrap_or(0);
+        
         Self {
-            id: random::get_int(1, 100),
+            id: max_id + 1,
             title,
             description,
             priority,

@@ -1,6 +1,7 @@
 # === Rust-specific ===
 /target/
 **/*.rs.bk
+tasks.json
 
 # === Cargo-related ===
 /Cargo.lock  # Uncomment if you're making a library

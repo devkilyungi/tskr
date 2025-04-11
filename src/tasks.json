@@ -1,10 +1,18 @@
 [
   {
-    "id": 68,
-    "title": "do laundry\n",
+    "id": 1,
+    "title": "Laundry\n",
     "description": "clean clothes",
     "priority": "High",
     "status": "Pending",
-    "category": "cleaning"
+    "category": "Cleaning"
+  },
+  {
+    "id": 2,
+    "title": "Code\n",
+    "description": "code side project",
+    "priority": "Medium",
+    "status": "Completed",
+    "category": "Work"
   }
 ]
