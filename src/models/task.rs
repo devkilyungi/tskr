@@ -3,9 +3,9 @@ use std::fmt;
 
 pub struct Task {
     pub id: i32,
-    title: String,
-    description: String,
-    priority: TaskPriority,
+    pub title: String,
+    pub description: String,
+    pub priority: TaskPriority,
     pub status: TaskStatus,
     pub category: String,
 }
@@ -98,5 +98,12 @@ impl Task {
 
     pub fn mark_task_as_complete(&mut self) {
         self.status = TaskStatus::Completed;
+    }
+    
+    pub fn is_completed(&self) -> bool {
+        match self.status {
+            TaskStatus::Completed => true,
+            _ => false,
+        }
     }
 }

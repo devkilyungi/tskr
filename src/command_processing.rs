@@ -275,11 +275,53 @@ pub fn delete_task(task_list: &mut Vec<Task>) {
         .read_line(&mut id_input)
         .expect("Failed to read line");
     let id_input = id_input.trim().parse::<i32>().expect("Invalid ID");
-    
+
     if let Some(task_index) = task_list.iter().position(|t| t.id == id_input) {
         task_list.remove(task_index);
         println!("Task deleted successfully!");
     } else {
         println!("Task not found!");
+    }
+}
+
+pub fn show_stats(task_list: &[Task]) {
+    let completed_tasks = task_list.iter().filter(|t| t.is_completed()).count();
+    let pending_tasks = task_list.iter().filter(|t| !t.is_completed()).count();
+
+    let completed_tasks_percent = if task_list.is_empty() {
+        0.0
+    } else {
+        (completed_tasks as f32 / task_list.len() as f32) * 100.0
+    };
+    let pending_tasks_percent = if task_list.is_empty() {
+        0.0
+    } else {
+        (pending_tasks as f32 / task_list.len() as f32) * 100.0
+    };
+
+    println!("Total tasks: {}", task_list.len());
+    println!(
+        "Completed Tasks: {} ({}%)",
+        completed_tasks, completed_tasks_percent
+    );
+    println!(
+        "Pending Tasks: {} ({}%)",
+        pending_tasks, pending_tasks_percent
+    );
+    println!("Task by category: ");
+    if task_list.is_empty() {
+        println!("No tasks found!");
+    } else {
+        task_list.iter().for_each(|task| {
+            println!("{}: {}", task.category, task.title);
+        });
+    }
+    println!("Task by priority: ");
+    if task_list.is_empty() {
+        println!("No tasks found!");
+    } else {
+        task_list.iter().for_each(|task| {
+            println!("{}: {}", task.priority, task.title);
+        });
     }
 }
