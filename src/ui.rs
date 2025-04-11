@@ -12,6 +12,7 @@ pub fn available_commands() {
     println!("  filter   - Filter tasks by category or status");
     println!("  update   - Update an existing task");
     println!("  complete - Mark a task as complete");
+    println!("  undo     - Mark complete task as pending");
     println!("  delete   - Delete a task");
     println!("  stats    - Show task statistics");
     println!("  help     - Show this help message");

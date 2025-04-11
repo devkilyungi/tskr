@@ -48,7 +48,8 @@ fn main() {
             "list" => command_processing::list_tasks(&task_list),
             "filter" => command_processing::filter_tasks(&task_list),
             "update" => command_processing::update_task(&mut task_list),
-            "complete" => {}
+            "complete" => command_processing::complete_task(&mut task_list),
+            "undo" => command_processing::undo_task(&mut task_list),
             "delete" => {}
             "stats" => {}
             _ => println!("Unknown command. Type 'help' for available commands."),

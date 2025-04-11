@@ -122,7 +122,7 @@ pub fn filter_tasks(task_list: &[Task]) {
                 .for_each(|task| println!("{}", task.task_info()));
         }
     } else if choice == "status" {
-        println!("Filter tasks by status:");
+        println!("Filter tasks by status (pending/completed):");
         let mut status = String::new();
         print!("Status: ");
         io::stdout().flush().expect("Failed to flush stdout");
@@ -156,6 +156,8 @@ pub fn filter_tasks(task_list: &[Task]) {
 pub fn update_task(task_list: &mut [Task]) {
     println!("Update task by ID:");
     let mut id = String::new();
+    print!("ID: ");
+    io::stdout().flush().expect("Failed to flush stdout");
     io::stdin().read_line(&mut id).expect("Failed to read line");
     let id = id.trim().parse::<i32>().expect("Invalid ID");
 
@@ -223,6 +225,42 @@ pub fn update_task(task_list: &mut [Task]) {
 
         task_list[task_index].update_task(title, description, priority, category);
         println!("Task updated successfully!");
+    } else {
+        println!("Task not found!");
+    }
+}
+
+pub fn complete_task(task_list: &mut [Task]) {
+    println!("Complete Task by ID:");
+    let mut id_input = String::new();
+    print!("ID: ");
+    io::stdout().flush().expect("Failed to flush stdout");
+    io::stdin()
+        .read_line(&mut id_input)
+        .expect("Failed to read line");
+    let id_input = id_input.trim().parse::<i32>().expect("Invalid ID");
+
+    if let Some(task) = task_list.iter_mut().find(|t| t.id == id_input) {
+        task.mark_task_as_complete();
+        println!("Task completed successfully!");
+    } else {
+        println!("Task not found!");
+    }
+}
+
+pub fn undo_task(task_list: &mut [Task]) {
+    println!("Undo Task by ID:");
+    let mut id_input = String::new();
+    print!("ID: ");
+    io::stdout().flush().expect("Failed to flush stdout");
+    io::stdin()
+        .read_line(&mut id_input)
+        .expect("Failed to read line");
+    let id_input = id_input.trim().parse::<i32>().expect("Invalid ID");
+
+    if let Some(task) = task_list.iter_mut().find(|t| t.id == id_input) {
+        task.mark_task_as_pending();
+        println!("Task marked as 'Pending' successfully!");
     } else {
         println!("Task not found!");
     }
