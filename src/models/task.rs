@@ -101,9 +101,6 @@ impl Task {
     }
     
     pub fn is_completed(&self) -> bool {
-        match self.status {
-            TaskStatus::Completed => true,
-            _ => false,
-        }
+        matches!(self.status, TaskStatus::Completed)
     }
 }
