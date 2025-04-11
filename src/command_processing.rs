@@ -265,3 +265,21 @@ pub fn undo_task(task_list: &mut [Task]) {
         println!("Task not found!");
     }
 }
+
+pub fn delete_task(task_list: &mut Vec<Task>) {
+    println!("Delete Task by ID:");
+    let mut id_input = String::new();
+    print!("ID: ");
+    io::stdout().flush().expect("Failed to flush stdout");
+    io::stdin()
+        .read_line(&mut id_input)
+        .expect("Failed to read line");
+    let id_input = id_input.trim().parse::<i32>().expect("Invalid ID");
+    
+    if let Some(task_index) = task_list.iter().position(|t| t.id == id_input) {
+        task_list.remove(task_index);
+        println!("Task deleted successfully!");
+    } else {
+        println!("Task not found!");
+    }
+}

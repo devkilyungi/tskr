@@ -50,7 +50,7 @@ fn main() {
             "update" => command_processing::update_task(&mut task_list),
             "complete" => command_processing::complete_task(&mut task_list),
             "undo" => command_processing::undo_task(&mut task_list),
-            "delete" => {}
+            "delete" => command_processing::delete_task(&mut task_list),
             "stats" => {}
             _ => println!("Unknown command. Type 'help' for available commands."),
         }
