@@ -4,12 +4,13 @@ use models::Task;
 
 mod command_processing;
 mod models;
+mod storage;
 mod ui;
 
 fn main() {
     ui::welcome_message();
 
-    let mut task_list: Vec<Task> = Vec::new();
+    let mut task_list: Vec<Task> = storage::load_from_json("tasks.json").unwrap_or_default();
 
     loop {
         println!("\nEnter a command: ");
@@ -54,5 +55,6 @@ fn main() {
         }
     }
 
+    println!("Saving tasks...Done!");
     println!("Goodbye!");
 }

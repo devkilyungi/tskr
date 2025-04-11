@@ -1,6 +1,8 @@
 use random_str as random;
 use std::fmt;
+use serde::{Serialize, Deserialize};
 
+#[derive(Serialize, Deserialize)]
 pub struct Task {
     pub id: i32,
     pub title: String,
@@ -10,6 +12,7 @@ pub struct Task {
     pub category: String,
 }
 
+#[derive(Serialize, Deserialize)]
 pub enum TaskStatus {
     Pending,
     Completed,
@@ -24,6 +27,7 @@ impl fmt::Display for TaskStatus {
     }
 }
 
+#[derive(Serialize, Deserialize)]
 pub enum TaskPriority {
     Low,
     Medium,

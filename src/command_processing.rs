@@ -224,6 +224,10 @@ pub fn update_task(task_list: &mut [Task]) {
         category = category.trim().to_string();
 
         task_list[task_index].update_task(title, description, priority, category);
+        let result = crate::storage::save_to_json(task_list);
+        if let Err(e) = result {
+            eprintln!("Failed to save tasks: {}", e);
+        }
         println!("Task updated successfully!");
     } else {
         println!("Task not found!");
@@ -242,6 +246,10 @@ pub fn complete_task(task_list: &mut [Task]) {
 
     if let Some(task) = task_list.iter_mut().find(|t| t.id == id_input) {
         task.mark_task_as_complete();
+        let result = crate::storage::save_to_json(task_list);
+        if let Err(e) = result {
+            eprintln!("Failed to save tasks: {}", e);
+        }
         println!("Task completed successfully!");
     } else {
         println!("Task not found!");
@@ -260,6 +268,10 @@ pub fn undo_task(task_list: &mut [Task]) {
 
     if let Some(task) = task_list.iter_mut().find(|t| t.id == id_input) {
         task.mark_task_as_pending();
+        let result = crate::storage::save_to_json(task_list);
+        if let Err(e) = result {
+            eprintln!("Failed to save tasks: {}", e);
+        }
         println!("Task marked as 'Pending' successfully!");
     } else {
         println!("Task not found!");
@@ -278,6 +290,10 @@ pub fn delete_task(task_list: &mut Vec<Task>) {
 
     if let Some(task_index) = task_list.iter().position(|t| t.id == id_input) {
         task_list.remove(task_index);
+        let result = crate::storage::save_to_json(task_list);
+        if let Err(e) = result {
+            eprintln!("Failed to save tasks: {}", e);
+        }
         println!("Task deleted successfully!");
     } else {
         println!("Task not found!");
