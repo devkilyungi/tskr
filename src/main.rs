@@ -3,9 +3,7 @@ use std::io;
 use models::Task;
 
 mod command_processing;
-mod error;
 mod models;
-mod storage;
 mod ui;
 
 fn main() {
