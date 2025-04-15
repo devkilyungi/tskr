@@ -4,7 +4,7 @@
     "title": "Laundry\n",
     "description": "clean clothes",
     "priority": "High",
-    "status": "Pending",
+    "status": "Completed",
     "category": "Cleaning"
   },
   {
@@ -12,7 +12,7 @@
     "title": "Code\n",
     "description": "code side project",
     "priority": "Medium",
-    "status": "Completed",
+    "status": "Pending",
     "category": "Work"
   }
 ]
